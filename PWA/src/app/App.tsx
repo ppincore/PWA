@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter, NavLink, Navigate, Route, Routes } from 'react-router-dom';
 import { LogOut, LayoutDashboard, PiggyBank, ReceiptText, Tags, BarChart3, UserCircle } from 'lucide-react';
 import { AuthPanel } from '../features/auth/AuthPanel';
@@ -7,9 +8,15 @@ import { CategoriesPage } from '../pages/CategoriesPage';
 import { DashboardPage } from '../pages/DashboardPage';
 import { ProfilePage } from '../pages/ProfilePage';
 import { TransactionsPage } from '../pages/TransactionsPage';
+import { locale, t } from '../i18n';
 
 function Shell({ children }: { children: React.ReactNode }) {
   const token = localStorage.getItem('accessToken');
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    document.title = `${t.appName} — ${t.personalDashboard}`;
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
@@ -27,34 +34,34 @@ function Shell({ children }: { children: React.ReactNode }) {
         <div className="brand-box">
           <div className="brand-mark">F</div>
           <div>
-            <strong>Finance</strong>
-            <span>Personal dashboard</span>
+            <strong>{t.appName}</strong>
+            <span>{t.personalDashboard}</span>
           </div>
         </div>
 
         <nav className="nav-list">
           <NavLink to="/" end>
-            <LayoutDashboard size={18} /> Dashboard
+            <LayoutDashboard size={18} /> {t.dashboard}
           </NavLink>
           <NavLink to="/accounts">
-            <PiggyBank size={18} /> Accounts
+            <PiggyBank size={18} /> {t.accounts}
           </NavLink>
           <NavLink to="/transactions">
-            <ReceiptText size={18} /> Operations
+            <ReceiptText size={18} /> {t.operations}
           </NavLink>
           <NavLink to="/categories">
-            <Tags size={18} /> Categories
+            <Tags size={18} /> {t.categories}
           </NavLink>
           <NavLink to="/analytics">
-            <BarChart3 size={18} /> Analytics
+            <BarChart3 size={18} /> {t.analytics}
           </NavLink>
           <NavLink to="/profile">
-            <UserCircle size={18} /> Profile
+            <UserCircle size={18} /> {t.profile}
           </NavLink>
         </nav>
 
         <button className="logout-button" type="button" onClick={handleLogout}>
-          <LogOut size={16} /> Logout
+          <LogOut size={16} /> {t.logout}
         </button>
       </aside>
 

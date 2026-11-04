@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { t } from '../../i18n';
 import { useLoginMutation, useRegisterMutation } from '../../shared/api/api';
 
 export function AuthPanel() {
@@ -29,39 +30,39 @@ export function AuthPanel() {
     <div className="auth-shell">
       <div className="auth-card">
         <div className="auth-header">
-          <span className="eyebrow">Finance</span>
-          <h1>{isRegister ? 'Create account' : 'Welcome back'}</h1>
-          <p>{isRegister ? 'Start tracking your cash flow.' : 'Sign in to your personal finance dashboard.'}</p>
+          <span className="eyebrow">{t.appName}</span>
+          <h1>{isRegister ? t.createAccount : t.welcomeBack}</h1>
+          <p>{isRegister ? t.registerSubtitle : t.loginSubtitle}</p>
         </div>
         <div className="tab-row">
           <button className={!isRegister ? 'active' : ''} type="button" onClick={() => setIsRegister(false)}>
-            Login
+            {t.login}
           </button>
           <button className={isRegister ? 'active' : ''} type="button" onClick={() => setIsRegister(true)}>
-            Register
+            {t.register}
           </button>
         </div>
 
         <form className="form-grid" onSubmit={handleSubmit}>
           {isRegister && (
             <label>
-              Name
+              {t.name}
               <input value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} />
             </label>
           )}
 
           <label>
-            Email
+            {t.email}
             <input type="email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} />
           </label>
 
           <label>
-            Password
+            {t.password}
             <input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} />
           </label>
 
           <button className="primary" type="submit" disabled={isRegisterLoading || isLoginLoading}>
-            {isRegister ? 'Create account' : 'Sign in'}
+            {isRegister ? t.createAccount : t.signIn}
           </button>
         </form>
       </div>

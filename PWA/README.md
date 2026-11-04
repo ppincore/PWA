@@ -1,31 +1,31 @@
-# Finance app
+# Финансовое приложение
 
-Full-stack personal finance application with React frontend and NestJS + Prisma backend.
+Полноценное приложение для учёта личных финансов с фронтендом на React и бэкендом на NestJS + Prisma.
 
-## Stack
+## Технологический стек
 
-- Frontend: React + TypeScript + Vite
-- Backend: NestJS + Prisma + PostgreSQL
-- Auth: JWT
-- PWA: manifest and service worker
+- Фронтенд: React + TypeScript + Vite
+- Бэкенд: NestJS + Prisma + PostgreSQL
+- Авторизация: JWT
+- PWA: манифест и service worker
 
-## Local development
+## Локальная разработка
 
-From the project root:
+Из корня проекта:
 
 ```bash
 npm install
 npm run dev
 ```
 
-This starts PostgreSQL in Docker, waits until it is ready, and then launches both processes together:
+Эта команда запускает PostgreSQL через Docker, ждёт готовности базы и затем запускает оба процесса вместе:
 
-- frontend: http://localhost:5173
-- backend: http://localhost:4000
-- API docs: http://localhost:4000/docs
-- database: localhost:5432
+- фронтенд: http://localhost:5173
+- бэкенд: http://localhost:4000
+- документация API: http://localhost:4000/docs
+- база данных: localhost:5432
 
-Useful commands:
+Полезные команды:
 
 ```bash
 npm run dev:db
@@ -36,29 +36,29 @@ npm run build
 npm run build:backend
 ```
 
-## Production Docker stack
+## Продакшн стек через Docker
 
-To start the full production stack in one command:
+Чтобы запустить полный продакшн стек одной командой:
 
 ```bash
 docker compose up --build
 ```
 
-This will bring up:
+После этого будут запущены:
 
-- PostgreSQL on localhost:5432
-- backend API on localhost:4000
-- frontend site on localhost:80
+- PostgreSQL на localhost:5432
+- API бэкенда на localhost:4000
+- фронтенд сайт на localhost:80
 
-To stop it:
+Чтобы остановить:
 
 ```bash
 docker compose down
 ```
 
-## Linux server deployment
+## Развёртывание на Linux сервере
 
-### 1. Install dependencies
+### 1. Установите зависимости
 
 ```bash
 sudo apt update
@@ -68,7 +68,7 @@ sudo apt install -y nodejs
 sudo npm install -g pm2
 ```
 
-### 2. Clone the project
+### 2. Склонируйте проект
 
 ```bash
 cd /var/www
@@ -76,15 +76,15 @@ sudo git clone <your-repo-url> finance-app
 cd finance-app
 ```
 
-### 3. Configure environment
+### 3. Настройте окружение
 
-Create the backend environment file:
+Создайте файл окружения для бэкенда:
 
 ```bash
 cp .env.example server/.env
 ```
 
-Then edit the values in `server/.env`:
+Затем отредактируйте значения в `server/.env`:
 
 ```env
 DATABASE_URL=postgresql://finance_user:finance_password@127.0.0.1:5432/finance_db?schema=public
@@ -94,7 +94,7 @@ API_PORT=4000
 NODE_ENV=production
 ```
 
-If PostgreSQL is installed on the same server, create the database:
+Если PostgreSQL установлен на этом же сервере, создайте базу данных:
 
 ```bash
 sudo -u postgres psql -c "CREATE DATABASE finance_db;"
@@ -102,14 +102,14 @@ sudo -u postgres psql -c "CREATE USER finance_user WITH ENCRYPTED PASSWORD 'fina
 sudo -u postgres psql -c "ALTER ROLE finance_user WITH SUPERUSER;"
 ```
 
-### 4. Install app dependencies
+### 4. Установите зависимости приложения
 
 ```bash
 npm install
 cd server && npm install && npx prisma generate && npx prisma migrate deploy
 ```
 
-### 5. Build the project
+### 5. Соберите проект
 
 ```bash
 cd ..
@@ -117,9 +117,9 @@ npm run build
 npm run build:backend
 ```
 
-### 6. Run under PM2
+### 6. Запуск через PM2
 
-Create a PM2 ecosystem file or run commands directly:
+Создайте файл ecosystem или запускайте команды напрямую:
 
 ```bash
 pm2 start "npm run dev:backend" --name finance-backend
@@ -128,7 +128,7 @@ pm2 save
 pm2 startup
 ```
 
-For production, a more stable setup is:
+Для продакшна более стабильный вариант:
 
 ```bash
 pm2 start "npm run preview -- --host 0.0.0.0 --port 4173" --name finance-frontend
@@ -137,7 +137,7 @@ pm2 start "node server/dist/main.js" --name finance-backend
 
 ### 7. Nginx reverse proxy
 
-Example config:
+Пример конфигурации:
 
 ```nginx
 server {
@@ -164,7 +164,7 @@ server {
 }
 ```
 
-Then enable the config:
+После этого включите конфиг:
 
 ```bash
 sudo ln -s /etc/nginx/sites-available/finance-app /etc/nginx/sites-enabled/
@@ -172,22 +172,22 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
 
-### 8. Security recommendations
+### 8. Рекомендации по безопасности
 
-- use strong JWT secrets
-- keep PostgreSQL behind localhost or a private network
-- set up a firewall
-- use HTTPS with Let's Encrypt
-- run the app under a non-root user
+- используйте надёжные JWT-секреты
+- храните PostgreSQL на localhost или в частной сети
+- настройте firewall
+- используйте HTTPS через Let's Encrypt
+- запускайте приложение под не-root пользователем
 
-## Common production notes
+## Частые замечания для продакшна
 
-- frontend is served on port 5173 in development and can be proxied via Nginx in production
-- backend listens on port 4000 by default
-- API docs are available at `/docs`
-- database schema is managed via Prisma migrations
+- фронтенд работает на порту 5173 в разработке и может быть проксирован через Nginx в продакшне
+- бэкенд по умолчанию слушает порт 4000
+- документация API доступна по `/docs`
+- схема базы данных управляется через Prisma миграции
 
-## Useful migration command
+## Полезная команда миграции
 
 ```bash
 cd server

@@ -1,5 +1,6 @@
 import { ArrowDownRight, ArrowUpRight, CreditCard, TrendingUp } from 'lucide-react';
 import { ResponsiveContainer, Area, AreaChart, Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
+import { t } from '../i18n';
 import { useGetCategoryStatsQuery, useGetIncomeExpenseQuery, useGetOverviewQuery } from '../shared/api/api';
 
 export function DashboardPage() {
@@ -11,8 +12,8 @@ export function DashboardPage() {
     <div className="page-stack">
       <div className="header-row">
         <div>
-          <span className="eyebrow">Dashboard</span>
-          <h2>Overview</h2>
+          <span className="eyebrow">{t.dashboard}</span>
+          <h2>{t.overview}</h2>
         </div>
       </div>
 
@@ -20,28 +21,28 @@ export function DashboardPage() {
         <div className="stat-card accent-green">
           <div className="stat-icon green"><TrendingUp size={18} /></div>
           <div>
-            <span>Total balance</span>
+            <span>{t.totalBalance}</span>
             <strong>{Number(overview?.totalBalance ?? 0).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</strong>
           </div>
         </div>
         <div className="stat-card accent-blue">
           <div className="stat-icon blue"><ArrowUpRight size={18} /></div>
           <div>
-            <span>Income</span>
+            <span>{t.income}</span>
             <strong>{Number(overview?.income ?? 0).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</strong>
           </div>
         </div>
         <div className="stat-card accent-red">
           <div className="stat-icon red"><ArrowDownRight size={18} /></div>
           <div>
-            <span>Expenses</span>
+            <span>{t.expenses}</span>
             <strong>{Number(overview?.expense ?? 0).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</strong>
           </div>
         </div>
         <div className="stat-card accent-neutral">
           <div className="stat-icon neutral"><CreditCard size={18} /></div>
           <div>
-            <span>Difference</span>
+            <span>{t.difference}</span>
             <strong>{Number(overview?.difference ?? 0).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</strong>
           </div>
         </div>
@@ -49,7 +50,7 @@ export function DashboardPage() {
 
       <div className="chart-grid">
         <div className="panel">
-          <h3>Income vs expenses</h3>
+          <h3>{t.incomeVsExpenses}</h3>
           <div className="chart-box">
             <ResponsiveContainer width="100%" height={260}>
               <AreaChart data={incomeExpense}>
@@ -75,7 +76,7 @@ export function DashboardPage() {
         </div>
 
         <div className="panel">
-          <h3>Expense categories</h3>
+          <h3>{t.expenseCategories}</h3>
           <div className="chart-box">
             <ResponsiveContainer width="100%" height={260}>
               <BarChart data={categoryStats}>

@@ -1,4 +1,5 @@
 import { ResponsiveContainer, Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
+import { t } from '../i18n';
 import { useGetBalanceHistoryQuery, useGetIncomeExpenseQuery } from '../shared/api/api';
 
 export function AnalyticsPage() {
@@ -9,14 +10,14 @@ export function AnalyticsPage() {
     <div className="page-stack">
       <div className="header-row">
         <div>
-          <span className="eyebrow">Analytics</span>
-          <h2>Statistics</h2>
+          <span className="eyebrow">{t.analytics}</span>
+          <h2>{t.statistics}</h2>
         </div>
       </div>
 
       <div className="chart-grid">
         <div className="panel">
-          <h3>Monthly report</h3>
+          <h3>{t.monthlyReport}</h3>
           <div className="chart-box">
             <ResponsiveContainer width="100%" height={260}>
               <BarChart data={monthly}>
@@ -32,7 +33,7 @@ export function AnalyticsPage() {
         </div>
 
         <div className="panel">
-          <h3>Balance dynamics</h3>
+          <h3>{t.balanceDynamics}</h3>
           <div className="chart-box">
             <ResponsiveContainer width="100%" height={260}>
               <BarChart data={balanceHistory}>

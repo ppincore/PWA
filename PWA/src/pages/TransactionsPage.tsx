@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { t } from '../i18n';
 import { useCreateTransactionMutation, useGetAccountsQuery, useGetCategoriesQuery, useGetTransactionsQuery } from '../shared/api/api';
 
 export function TransactionsPage() {
@@ -25,63 +26,63 @@ export function TransactionsPage() {
     <div className="page-stack">
       <div className="header-row">
         <div>
-          <span className="eyebrow">Transactions</span>
-          <h2>Operations</h2>
+          <span className="eyebrow">{t.operations}</span>
+          <h2>{t.operations}</h2>
         </div>
       </div>
 
       <div className="two-column-grid">
         <form className="panel form-panel" onSubmit={handleSubmit}>
-          <h3>New operation</h3>
+          <h3>{t.newOperation}</h3>
           <div className="form-grid">
             <label>
-              Account
+              {t.account}
               <select value={form.accountId} onChange={(event) => setForm({ ...form, accountId: event.target.value })}>
-                <option value="">Select account</option>
+                <option value="">{t.selectAccount}</option>
                 {accounts.map((account) => (
                   <option key={account.id} value={account.id}>{account.name}</option>
                 ))}
               </select>
             </label>
             <label>
-              Type
+              {t.type}
               <select value={form.type} onChange={(event) => setForm({ ...form, type: event.target.value })}>
-                <option value="INCOME">Income</option>
-                <option value="EXPENSE">Expense</option>
+                <option value="INCOME">{t.income}</option>
+                <option value="EXPENSE">{t.expense}</option>
               </select>
             </label>
             <label>
-              Category
+              {t.category}
               <select value={form.categoryId} onChange={(event) => setForm({ ...form, categoryId: event.target.value })}>
-                <option value="">No category</option>
+                <option value="">{t.noCategory}</option>
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>{category.name}</option>
                 ))}
               </select>
             </label>
             <label>
-              Amount
+              {t.amount}
               <input type="number" step="0.01" value={form.amount} onChange={(event) => setForm({ ...form, amount: event.target.value })} />
             </label>
             <label>
-              Date
+              {t.date}
               <input type="date" value={form.date} onChange={(event) => setForm({ ...form, date: event.target.value })} />
             </label>
             <label>
-              Description
+              {t.description}
               <input value={form.description} onChange={(event) => setForm({ ...form, description: event.target.value })} />
             </label>
           </div>
-          <button className="primary" type="submit">Add operation</button>
+          <button className="primary" type="submit">{t.operations}</button>
         </form>
 
         <div className="panel list-panel">
-          <h3>Recent operations</h3>
+          <h3>{t.recentOperations}</h3>
           {transactions.slice(0, 8).map((transaction) => (
             <div key={transaction.id} className="list-item">
               <div>
-                <strong>{transaction.description || 'Operation'}</strong>
-                <span>{transaction.type}</span>
+                <strong>{transaction.description || t.noDescription}</strong>
+                <span>{transaction.type === 'INCOME' ? t.income : t.expense}</span>
               </div>
               <div className={transaction.type === 'INCOME' ? 'money good' : 'money bad'}>
                 {transaction.type === 'INCOME' ? '+' : '-'}

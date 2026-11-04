@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { formatCategoryType, t } from '../i18n';
 import { useCreateCategoryMutation, useGetCategoriesQuery } from '../shared/api/api';
 
 export function CategoriesPage() {
@@ -21,39 +22,39 @@ export function CategoriesPage() {
     <div className="page-stack">
       <div className="header-row">
         <div>
-          <span className="eyebrow">Categories</span>
-          <h2>Income and expenses</h2>
+          <span className="eyebrow">{t.categories}</span>
+          <h2>{t.incomeAndExpenses}</h2>
         </div>
       </div>
 
       <div className="two-column-grid">
         <form className="panel form-panel" onSubmit={handleSubmit}>
-          <h3>Create category</h3>
+          <h3>{t.createCategory}</h3>
           <div className="form-grid">
             <label>
-              Name
+              {t.name}
               <input value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} />
             </label>
             <label>
-              Type
+              {t.type}
               <select value={form.type} onChange={(event) => setForm({ ...form, type: event.target.value })}>
-                <option value="EXPENSE">Expense</option>
-                <option value="INCOME">Income</option>
+                <option value="EXPENSE">{t.expense}</option>
+                <option value="INCOME">{t.income}</option>
               </select>
             </label>
           </div>
-          <button className="primary" type="submit">Save category</button>
+          <button className="primary" type="submit">{t.saveCategory}</button>
         </form>
 
         <div className="panel list-panel">
-          <h3>Categories</h3>
+          <h3>{t.categories}</h3>
           {data.map((category) => (
             <div key={category.id} className="list-item">
               <div>
                 <strong>{category.name}</strong>
-                <span>{category.type}</span>
+                <span>{formatCategoryType(category.type)}</span>
               </div>
-              <span className="chip">{category.type}</span>
+              <span className="chip">{formatCategoryType(category.type)}</span>
             </div>
           ))}
         </div>
