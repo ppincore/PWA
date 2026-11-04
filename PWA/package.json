@@ -1,0 +1,47 @@
+{
+  "name": "pwa",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev:db": "docker compose up -d postgres || { echo \"Docker is not running or not installed. Start Docker Desktop / Docker Engine and rerun npm run dev.\"; exit 1; }",
+    "dev:frontend": "vite --host 0.0.0.0",
+    "dev:backend": "npm --prefix server run start:dev",
+    "dev": "npm run dev:db && npm --prefix server run prisma:generate && npm --prefix server run prisma:deploy && wait-on tcp:localhost:5432 && concurrently -k -n frontend,backend -c auto \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "prisma:generate": "npm --prefix server run prisma:generate",
+    "db:init": "npm --prefix server run prisma:deploy",
+    "dev:down": "docker compose down",
+    "build": "tsc -b && vite build",
+    "build:backend": "npm --prefix server run build",
+    "build:all": "npm run build && npm run build:backend",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^7.0.2",
+    "@reduxjs/toolkit": "^2.14.0",
+    "lucide-react": "^1.68.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-hook-form": "^7.91.0",
+    "react-redux": "^9.3.1",
+    "react-router-dom": "^7.18.5",
+    "recharts": "^3.10.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@rolldown/plugin-babel": "^0.2.4",
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "concurrently": "^9.2.0",
+    "oxlint": "^1.89.0",
+    "typescript": "~7.0.2",
+    "vite": "^8.3.5",
+    "wait-on": "^8.0.1"
+  }
+}
